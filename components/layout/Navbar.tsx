@@ -2,8 +2,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 
 export function Navbar() {
+    const [isOpen, setIsOpen] = useState(false);
+
     const links = [
         { name: "About", href: "/about" },
         { name: "Services", href: "/services" },
@@ -37,7 +40,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Mobile Navigation */}
-                <Sheet>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
                         <Button variant="ghost" size="icon" className="md:hidden">
                             <Menu className="h-5 w-5" />
@@ -46,7 +49,11 @@ export function Navbar() {
                     </SheetTrigger>
                     <SheetContent side="right" className="bg-background border-border">
                         <div className="flex flex-col gap-6 mt-6">
-                            <Link href="/" className="font-mono text-xl font-bold tracking-tighter">
+                            <Link
+                                href="/"
+                                className="font-mono text-xl font-bold tracking-tighter"
+                                onClick={() => setIsOpen(false)}
+                            >
                                 UMINDSET
                             </Link>
                             <div className="flex flex-col gap-4">
@@ -55,11 +62,16 @@ export function Navbar() {
                                         key={link.href}
                                         href={link.href}
                                         className="text-lg font-medium text-foreground/80 hover:text-primary"
+                                        onClick={() => setIsOpen(false)}
                                     >
                                         {link.name}
                                     </Link>
                                 ))}
-                                <Link href="/contact" className="w-full mt-4">
+                                <Link
+                                    href="/contact"
+                                    className="w-full mt-4"
+                                    onClick={() => setIsOpen(false)}
+                                >
                                     <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold rounded-sm">
                                         Book a Call
                                     </Button>
